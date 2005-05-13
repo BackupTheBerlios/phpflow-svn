@@ -1,0 +1,21 @@
+PHPflow 0.9.x TODO-list (in no order):
+========================================
+
+implement symbols: comment, junction, connector
+
+write complete documentation
+
+optimize text centralization in drawDcs.php
+
+...
+
+
+-----------------------------------------------------------------------
+
+PHPflow after 1.0 TODO-list (in no order):
+============================================
+
+wrapper-scripts for automatic ini-file generation from source
+
+...
+

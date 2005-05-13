@@ -1,0 +1,143 @@
+PHPflow: PHP flowchart display program
+========================================
+PHPflow was written by Cyrix
+(http://phpflow.berlios.de)
+
+-----------------------------------------------------------------------
+Version: 0.9.2BETA
+--------------------
+
+I.   USAGE
+II.  TROUBLESHOOTING
+III. THANKS
+
+=======================================================================
+
+I.   USAGE
+============
+1. List of symbols available (alphabetically ordered)
+2. Short guide to flowchart writing
+
+1. List of symbols available (alphabetically ordered)
+-------------------------------------------------------
+TYPENAME       FILENAME       PROVIDES/MEANING
+---------------------------------------------------------------------
+Arrow          drawArr.php    Arrow from/to top,bottom,left,right
+ArrowDown      drawArr.php    Short for Arrow from top to bottom
+ArrowLeft      drawArr.php    Short for Arrow from right to left
+ArrowRight     drawArr.php    Short for Arrow from left to right
+Decision       drawDcs.php    Branching, e.g. if-clauses
+Input/Output   drawIO.php     User interaction (keyboard/screen)
+Line           drawLine.php   Line to enlarge an arrow (symbol size)
+LineShort      drawLine.php   Line to enlarge an arrow (arrow size)
+LoopBegin      drawLpB.php    Start a loop (e.g. for, while, etc.)
+LoopEnd        drawLpE.php    End a loop
+none             ---          Placeholder for empty cells
+Process        drawPrc.php    Most program actions
+Subprocess     drawSub.php    Functions, procedures
+Terminator     drawTrm.php    Starts and ends a flowchart
+---------------------------------------------------------------------
+
+2. Short guide to flowchart writing
+-------------------------------------
+It's very easy to write a flowchart for PHPflow once you've got an overview.
+First of all, you should take a look at the preview.ini if you haven't already
+done so. It is located in the data subdirectory of your PHPflow directory.
+You can use it as a starting point for your first PHPflow flowchart.
+
+Let's get serious now.
+In the [general] section the main parameters are defined.
+Most of them should be self-explanatory:
+
+title                page-title
+headline             page-headline
+subheadline          for additional infos
+element_width        witdh for all symbols
+element_height       height for all symbols
+arrow_space          width and height for all arrows
+font_size            fontsize of the internal PHP font (1-5)
+
+After you've set these, you can start writing the first symbol.
+For every row you start, you'll need a row identifier first.
+This is [row<id>] while <id> can be a number but doesn't need to.
+In fact you can use what you want there, PHPflow will read it from up to 
+down, using the id primarily for the internal anchor link target (url#<id>).
+
+Next, you need to specify, which symbol you want to use. Scroll a bit up for
+a complete symbol list. Usually you'll start with a terminator-symbol.
+As it is the first symbol in the row, you need to write:
+type1 = "Terminator"
+
+If you take a look at your flowchart now, you'll see a Terminator with
+nothing in it. For text to appear inside of it, you'll need to write text
+and the number of the symbol in which you want to have it. In this case:
+text1 = "Start"
+
+After you have the symbol ready now, you'll want to connect it to the next
+by an arrow. To accomplish this, simply put an
+type2 = "ArrowRight"
+under it, if you want the next symbol right of it, or use a new row and put
+[row<nextid>]
+type1 = "ArrowDown"
+under it, if you want the next symbol under the first one.
+
+Repeat these steps, until you've completely drawn your flowchart.
+
+Some of the symbols can use more parameters than other. Here's an overview:
+
+Arrow          text,link,start,end
+Line           text,link,start,end
+LineShort      text,link,start,end
+
+All the others just support text and link besides 'none' which logically
+doesn't support any parameter.
+
+-----------------------------------------------------------------------
+
+II.  TROUBLESHOOTING
+======================
+
+First of all, don't panic. This is BETA-software, so this can happen.
+
+Second, check if you meet the system requirements. (PHP/GD really working?)
+
+Third, are there any errormessages displayed or in the logs which give
+you a hint, where the problem might be ? If you are working on a secured
+or production server, the display_errors directive might be turned off.
+You can turn it on temporarily for this program by uncommenting the ini_set
+command in common.php line 24 (but don't forget to change it back once
+you solved the problem or your server admin may strangle you ... 
+no, just kidding).
+
+Fourth, if there's only a problem with one or some symbols, you may want to
+turn the debugmode on in config.inc.php and have a look at the errorlog it
+generates. The errorlog is by default in the logs subdirectory of your
+PHPflow directory. If there's not enough debug output you can open the
+appropriate file and call the log2file-function where you need it to send
+the information you want to the errorlog. IMPORTANT: don't forget to chmod
+the logs-directory (or whichever you set in config.inc.php) to 777 before
+activating the debugmode.
+
+And last but not least, if none of the above steps have helped, visit the
+forum at http://phpflow.berlios.de or contact me at cyrix@users.berlios.de .
+Please don't forget to provide accurate information about your web server,
+its version, your PHP version and a detailed description of PHPflow's
+misbehaviour.
+
+-----------------------------------------------------------------------
+
+III. THANKS
+=============
+
+Thanks to all those who have helped with hints, ideas, bug finding and code.
+Special thanks to the following:
+
++++ DangerousCat and PeKa gave me essential hints about coding in PHP
+    (especially after I've messed up the code with new features...) =)
+
++++ ole33 gave me the crucial hint about how to solve the drawDcs-issue.
+
++++ Without the help of icewind there would be no PHPflow-logo by now. 
+
+I'm sorry if I should have forgotten someone, it's due to my bad capacity
+of remembering. Please give me a yell then.
