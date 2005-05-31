@@ -21,11 +21,15 @@
 
 // *** phpflow symbol 'input/output' ***
 
-include("verifyVal.php"); // verify input values
+@include('verifyVal.php');    // verify input values
 
-if(!$valVerified)
-{
-	die("fatal error: input values NOT verified! check if valVerified.php is missing!");
+if (!$valverified) {
+  if (include_once('common.php')) {
+    log2file('fatal error: input values NOT verified!
+              check if verifyVal.php is missing!');
+  }
+  die('fatal error: input values NOT verified! 
+       check if verifyVal.php is missing!');
 }
 
 // preparation calculations
@@ -35,40 +39,44 @@ $maxcharsperline = floor($textareax / $fontwidth);
 $maxlines = floor($textareay / $fontheight);
 
 // calculate if the text fits into the space available
-log2file("[drawIO] text: ".$text);
+log2file('[drawIO] text: '.$text);
 $text = wordwrap($text, $maxcharsperline, "\n", 1);
 $lines = explode("\n", $text);
-if(count($lines) > $maxlines)
-{
-	$lines = explode("\n", "TEXT TOO LONG");
+if (count($lines) > $maxlines) {
+  $lines = explode("\n", 'TEXT TOO LONG');
 }
 
 // centralize the text vertically
-$offsety = floor(floor($textareay/2-ceil((count($lines)/2)*$fontheight))*0.98);
+$offsety = floor(floor($textareay / 2 - ceil((count($lines) / 2) * 
+                       $fontheight)) * 0.98);
 
 // offsets to mark the textarea
-$x = round(($width - $textareax)/2);
-$y = round(($height - $textareay)/2);
+$x = round(($width - $textareax) / 2);
+$y = round(($height - $textareay) / 2);
+
 
 // end preparations
 
+
 header("Content-type: image/png");
 
-$io = ImageCreate($width+1, $height+1);
+$io = ImageCreate($width + 1, $height + 1);
 $white = ImageColorAllocate($io, 255, 255, 255);
 $black = ImageColorAllocate($io, 0, 0, 0);
 
-$points = array(round($width*0.18,0), 0, $width, 0, $width-round($width*0.18,0), $height, 0, $height );
+$points = array(round($width * 0.18, 0), 0, 
+                $width, 0, 
+                $width - round($width * 0.18, 0), $height, 
+                0, $height );
 ImageLine($io, $points[0], $points[1], $points[2], $points[3], $black);
 ImageLine($io, $points[2], $points[3], $points[4], $points[5], $black);
 ImageLine($io, $points[4], $points[5], $points[6], $points[7], $black);
 ImageLine($io, $points[6], $points[7], $points[0], $points[1], $black);
 
-while (list($numl, $line) = each($lines))
-{
+while (list($numl, $line) = each($lines)) {
 	// centralize the text horizontally
-	$offsetx = round(($textareax-(strlen($line)*$fontwidth))/2);
-	ImageString($io, $font, $x+$offsetx, $y+$offsety, $line, $black);
+	$offsetx = round(($textareax - (strlen($line) * $fontwidth)) / 2);
+	ImageString($io, $font, $x + $offsetx, $y + $offsety, $line, $black);
 	$offsety += $fontheight;
 }    
 

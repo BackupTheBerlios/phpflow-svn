@@ -5,21 +5,21 @@
 // *** phpflow configuration file ***
 
 // local path where the ini-files are placed (trailing-slash required !)
-$PHPFLOW["INI_DIR"]="data/";
+$_PHPFLOW_config['INI_DIR'] = 'data/';
 
 // local path of the template-file
-$PHPFLOW["TEMPLATE"]="phpflow.tmpl.htm";
+$_PHPFLOW_config['TEMPLATE'] = 'phpflow.tmpl.htm';
 
 // maximum width of all flowchart symbols
-$PHPFLOW["MAX_WIDTH"]=400;
+$_PHPFLOW_config['MAX_WIDTH'] = 400;
  
 // maximum height of all flowchart symbols
-$PHPFLOW["MAX_HEIGHT"]=300;
+$_PHPFLOW_config['MAX_HEIGHT'] = 300;
 
 // log debug messages into a local file
-$PHPFLOW["DEBUGMODE"]=FALSE;
+$_PHPFLOW_config['DEBUGMODE'] = false;
 
 // local path to file where debugmessages are logged if debugmode activated
-$PHPFLOW["DEBUGFILE"]=getcwd()."/logs/phpflow.log";
+$_PHPFLOW_config['DEBUGFILE'] = getcwd().'/logs/phpflow.log';
 
 ?>

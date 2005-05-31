@@ -21,11 +21,15 @@
 
 // *** phpflow symbol 'terminator' ***
 
-include("verifyVal.php"); // verify input values
+@include('verifyVal.php');    // verify input values
 
-if(!$valVerified)
-{
-	die("fatal error: input values NOT verified! check if valVerified.php is missing!");
+if (!$valverified) {
+  if (include_once('common.php')) {
+    log2file('fatal error: input value NOT verified!
+              check if verifyVal.php is missing!');
+  }
+  die('fatal error: input values NOT verified! 
+       check if verifyVal.php is missing!');
 }
 
 // preparation calculations
@@ -35,41 +39,43 @@ $maxcharsperline = floor($textareax / $fontwidth);
 $maxlines = floor($textareay / $fontheight);
 
 // calculate if the text fits into the space available
-log2file("[drawTrm] text: ".$text);
+log2file('[drawTrm] text: '.$text);
 $text = wordwrap($text, $maxcharsperline, "\n", 1);
 $lines = explode("\n", $text);
-if(count($lines) > $maxlines)
-{
-	$lines = explode("\n", "TEXT TOO LONG");
+if(count($lines) > $maxlines) {
+  $lines = explode("\n", "TEXT TOO LONG");
 }
 
 // centralize the text vertically
-$offsety = floor(floor($textareay/2-ceil((count($lines)/2)*$fontheight))*0.98);
+$offsety = floor(floor($textareay / 2 - ceil((count($lines) / 2) * 
+                       $fontheight)) * 0.98);
 
 // offsets to mark the textarea
-$x = round(($width - $textareax)/2);
-$y = round(($height - $textareay)/2);
+$x = round(($width - $textareax) / 2);
+$y = round(($height - $textareay) / 2);
+
 
 // end preparations
 
+
 header("Content-type: image/png");
 
-$terminator = ImageCreate($width+1, $height+1);
+$terminator = ImageCreate($width + 1, $height + 1);
 $white = ImageColorAllocate($terminator, 255, 255, 255);
 $black = ImageColorAllocate($terminator, 0, 0, 0);
 
-$mid = round($height/2);
+$mid = round($height / 2);
 ImageArc($terminator, $mid, $mid, $height, $height, 90, 270, $black);
-ImageLine($terminator, $mid, 0, $width-$mid, 0, $black);
-ImageArc($terminator, $width-$mid, $mid, $height, $height, 270, 90, $black);
-ImageLine($terminator, $width-$mid, $height, $mid, $height, $black);
+ImageLine($terminator, $mid, 0, $width - $mid, 0, $black);
+ImageArc($terminator, $width - $mid, $mid, $height, $height, 270, 90, $black);
+ImageLine($terminator, $width - $mid, $height, $mid, $height, $black);
 
 while (list($numl, $line) = each($lines))
 {
-	// centralize the text horizontally
-	$offsetx = round(($textareax-(strlen($line)*$fontwidth))/2);
-	ImageString($terminator, $font, $x+$offsetx, $y+$offsety, $line, $black);
-	$offsety += $fontheight;
+  // centralize the text horizontally
+  $offsetx = round(($textareax - (strlen($line) * $fontwidth)) / 2);
+  ImageString($terminator, $font, $x + $offsetx, $y + $offsety, $line, $black);
+  $offsety += $fontheight;
 }    
 
 ImagePNG($terminator);
